@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page.title }}</title>
+  <title>My AI Newsletter</title>
   <style>
     /* Updated color palette:
        --brand  : primary (replaces blue) -> #ac1a03
@@ -27,9 +27,13 @@
     .nav-links a:hover{opacity:0.92}
     .container{max-width:960px;margin:2rem auto;padding:0 1rem}
     h1{margin-top:0}
-    .post-content{line-height:1.6;color:#333}
-    .post-meta{color:var(--muted);font-size:0.95rem;margin-bottom:1.5rem}
+    .post-list{list-style:none;padding:0;margin:1rem 0}
+    .post-list li{padding:0.6rem 0;border-bottom:1px solid #e6e9ee;display:flex;flex-direction:column}
+    .post-list a{color:var(--brand);text-decoration:none;font-weight:600}
+    .post-list a:hover{color:var(--accent)}
+    .meta{color:var(--muted);font-size:0.95rem;margin-bottom:0.25rem}
     footer{max-width:960px;margin:3rem auto;padding:1rem;text-align:center;color:var(--muted);font-size:0.9rem}
+    .badge{background:var(--accent);color:#111;padding:0.15rem 0.5rem;border-radius:999px;font-weight:600;font-size:0.85rem}
 
     /* Back button for individual post pages */
     .back {
@@ -51,9 +55,9 @@
 <body>
   <header class="site-header">
     <div class="inner">
-      <div class="brand"><a href="{{ '/' | relative_url }}">It's Agentic!</a></div>
+      <div class="brand"><a href="/">It's Agentic!</a></div>
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="/">Home</a>
          <!-- <a href="/newsletter/">Newsletter</a> -->
         <a href="/about/">About</a>
         <!-- <a href="/contact/">Contact</a> -->
@@ -62,19 +66,26 @@
   </header>
 
   <main class="container" role="main">
-    <a href="{{ '/' | relative_url }}" class="back">← Back to Home</a>
-    
-    <article>
-      <h1>{{ page.title }}</h1>
-      <div class="post-meta">{{ page.date | date: "%B %d, %Y" }}</div>
-      <div class="post-content">
-        {{ content }}
-      </div>
-    </article>
+    <h1>Latest AI Updates</h1>
+    <p>Welcome to my newsletter archive.</p>
+
+    <ul class="post-list">
+      
+        <li>
+          <div class="meta">January 15, 2026</div>
+          <a href="/2026/01/15/The-Future-is-Agentic/">The Future is Agentic: Marketing's Move from Channels to 1-to-1 Agents</a>
+        </li>
+      
+        <li>
+          <div class="meta">January 14, 2026</div>
+          <a href="/2026/01/14/The-Retail-Evolution/">The Retail Evolution: Google and Walmart Bet Big on Agentic Commerce</a>
+        </li>
+      
+    </ul>
   </main>
 
   <footer>
-    © {{ site.time | date: "%Y" }} <a href="https://github.com/TerelLewis/TLewis.github.io" style="color:var(--brand);text-decoration:none">TerelLewis</a> — Built with GitHub Pages
+    © 2026 <a href="https://github.com/TerelLewis/TLewis.github.io" style="color:var(--brand);text-decoration:none">TerelLewis</a> — Built with GitHub Pages
   </footer>
 </body>
 </html>
