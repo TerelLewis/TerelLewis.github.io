@@ -1,0 +1,24 @@
+---
+layout: default
+title: My AI Newsletter
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Newsletter</title>
+</head>
+<body>
+    <h1>Latest AI Updates</h1>
+    <p>Welcome to my newsletter archive.</p>
+
+    <ul class="post-list">
+      {% for post in site.posts %}
+        <li>
+          <strong>{{ post.date | date: "%B %d, %Y" }}</strong> — 
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+</body>
+</html>
