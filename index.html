@@ -19,19 +19,25 @@ title: My AI Newsletter
     html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;color:#111;background:var(--bg)}
     .site-header{background:var(--brand);color:white;padding:0.75rem 1rem;position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(2,6,23,0.08)}
     .site-header .inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-    .brand a{color:white;text-decoration:none;font-weight:700;font-size:1.05rem}
+    /* Brand/banner styling */
+    .brand a{
+      color:white;
+      text-decoration:none;
+      font-weight:800;
+      font-size:1.15rem;
+      letter-spacing:0.3px;
+      display:inline-block;
+    }
     .nav-links a{color:white;text-decoration:none;margin-left:1rem;font-weight:500}
     .nav-links a:hover{opacity:0.92}
     .container{max-width:960px;margin:2rem auto;padding:0 1rem}
     h1{margin-top:0}
     .post-list{list-style:none;padding:0;margin:1rem 0}
     .post-list li{padding:0.6rem 0;border-bottom:1px solid #e6e9ee;display:flex;flex-direction:column}
-    /* Use brand for links/accents and accent for hover/strong highlights */
     .post-list a{color:var(--brand);text-decoration:none;font-weight:600}
     .post-list a:hover{color:var(--accent)}
     .meta{color:var(--muted);font-size:0.95rem;margin-bottom:0.25rem}
     footer{max-width:960px;margin:3rem auto;padding:1rem;text-align:center;color:var(--muted);font-size:0.9rem}
-    /* Optional small accent elements (e.g., badges) */
     .badge{background:var(--accent);color:#111;padding:0.15rem 0.5rem;border-radius:999px;font-weight:600;font-size:0.85rem}
 
     /* Back button for individual post pages */
@@ -54,7 +60,7 @@ title: My AI Newsletter
 <body>
   <header class="site-header">
     <div class="inner">
-      <div class="brand"><a href="{{ '/' | relative_url }}">{{ site.title | default: "It's Agentic!" }}</a></div>
+      <div class="brand"><a href="{{ '/' | relative_url }}">It's Agentic!</a></div>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="{{ '/' | relative_url }}">Home</a>
          <!-- <a href="/newsletter/">Newsletter</a> -->
