@@ -3,22 +3,59 @@ layout: default
 title: My AI Newsletter
 ---
 
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <title>AI Newsletter</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page.title }}</title>
+  <style>
+    :root { --brand:#0b5fff; --bg:#f6f8fa; --muted:#6b7280; }
+    html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;color:#111;background:var(--bg)}
+    .site-header{background:var(--brand);color:white;padding:0.75rem 1rem;position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(2,6,23,0.08)}
+    .site-header .inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .brand a{color:white;text-decoration:none;font-weight:700;font-size:1.05rem}
+    .nav-links a{color:white;text-decoration:none;margin-left:1rem;font-weight:500}
+    .nav-links a:hover{opacity:0.92}
+    .container{max-width:960px;margin:2rem auto;padding:0 1rem}
+    h1{margin-top:0}
+    .post-list{list-style:none;padding:0;margin:1rem 0}
+    .post-list li{padding:0.6rem 0;border-bottom:1px solid #e6e9ee;display:flex;flex-direction:column}
+    .post-list a{color:var(--brand);text-decoration:none;font-weight:600}
+    .meta{color:var(--muted);font-size:0.95rem;margin-bottom:0.25rem}
+    footer{max-width:960px;margin:3rem auto;padding:1rem;text-align:center;color:var(--muted);font-size:0.9rem}
+    @media (max-width:640px){ .nav-links a{margin-left:0.6rem;font-size:0.95rem} }
+  </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="inner">
+      <div class="brand"><a href="{{ '/' | relative_url }}">{{ site.title | default: "Terel Lewis" }}</a></div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="/newsletter/">Newsletter</a>
+        <a href="/about/">About</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" role="main">
     <h1>Latest AI Updates</h1>
     <p>Welcome to my newsletter archive.</p>
 
     <ul class="post-list">
       {% for post in site.posts %}
         <li>
-          <strong>{{ post.date | date: "%B %d, %Y" }}</strong> — 
+          <div class="meta">{{ post.date | date: "%B %d, %Y" }}</div>
           <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
         </li>
       {% endfor %}
     </ul>
+  </main>
+
+  <footer>
+    © {{ site.time | date: "%Y" }} <a href="https://github.com/TerelLewis/TLewis.github.io">TerelLewis</a> — Built with GitHub Pages
+  </footer>
 </body>
 </html>
