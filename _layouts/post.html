@@ -15,7 +15,7 @@
     .site-header{background:var(--brand);color:white;padding:0.75rem 1rem;position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(2,6,23,0.08)}
     .site-header .inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
     /* Brand/banner styling */
-    .brand a{
+    .brand a, .brand .brand-title{
       color:white;
       text-decoration:none;
       font-weight:800;
@@ -30,6 +30,10 @@
     .post-content{line-height:1.6;color:#333}
     .post-meta{color:var(--muted);font-size:0.95rem;margin-bottom:1.5rem}
     footer{max-width:960px;margin:3rem auto;padding:1rem;text-align:center;color:var(--muted);font-size:0.9rem}
+
+    /* Brand banner */
+    .brand-banner { display:inline-flex; align-items:center; gap:0.7rem; cursor:default; }
+    .brand-svg { height:38px; width:auto; display:block; }
 
     /* Back button for individual post pages */
     .back {
@@ -51,7 +55,31 @@
 <body>
   <header class="site-header">
     <div class="inner">
-      <!--<div class="brand"><a href="{{ '/' | relative_url }}">It's Agentic!</a></div> -->
+      <div class="brand">
+        <!-- Banner is non-interactive (no <a> around it) -->
+        <div class="brand-banner" role="img" aria-label="{{ site.title | default: 'The Bot Layer' }}">
+          <svg class="brand-svg" viewBox="0 0 120 40" role="presentation" xmlns="http://www.w3.org/2000/svg" focusable="false">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#f2d16d" stop-opacity="0.95"/>
+                <stop offset="1" stop-color="#ffffff" stop-opacity="0.15"/>
+              </linearGradient>
+            </defs>
+            <rect x="0.5" y="2" rx="6" ry="6" width="119" height="36" fill="url(#g)" opacity="0.95"/>
+            <rect x="8" y="8" rx="3" ry="3" width="24" height="20" fill="#111" />
+            <rect x="14" y="14" width="3" height="3" rx="0.8" fill="#f2d16d"/>
+            <rect x="21" y="14" width="3" height="3" rx="0.8" fill="#f2d16d"/>
+            <rect x="16" y="19" width="10" height="2" rx="1" fill="#6e4315"/>
+            <rect x="18.5" y="4" width="1.8" height="4" fill="#111"/>
+            <circle cx="19.4" cy="4" r="1.6" fill="#f2d16d"/>
+            <g transform="translate(40,24)">
+              <text x="0" y="-2" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial" font-size="12" font-weight="800" fill="#ac1a03">{{ site.title | default: "The Bot Layer" }}</text>
+              <text x="0" y="10" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial" font-size="9" fill="#6e4315">{{ page.subtitle | default: page.description | default: "Concise AI updates" }}</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="{{ '/' | relative_url }}">Home</a>
          <!-- <a href="/newsletter/">Newsletter</a> -->
