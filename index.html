@@ -1,119 +1,51 @@
----
-layout: default
-title: The Bot Layer Newsletter
----
-
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{{ page.title }}</title>
-  <style>
-    /* Updated color palette:
-       --brand  : primary (replaces blue) -> #ac1a03
-       --accent : highlight / accent       -> #f2d16d
-       --muted  : secondary / muted text   -> #6e4315
-    */
-    :root { --brand:#ac1a03; --accent:#f2d16d; --bg:#f6f8fa; --muted:#6e4315; }
-    html,body{margin:0;padding:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;color:#111;background:var(--bg)}
-    .site-header{background:var(--brand);color:white;padding:0.75rem 1rem;position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(2,6,23,0.08)}
-    .site-header .inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-    /* Brand/banner styling */
-    .brand a, .brand .brand-title{
-      color:white;
-      text-decoration:none;
-      font-weight:800;
-      font-size:1.15rem;
-      letter-spacing:0.3px;
-      display:inline-block;
-    }
-    .nav-links a{color:white;text-decoration:none;margin-left:1rem;font-weight:500}
-    .nav-links a:hover{opacity:0.92}
-    .container{max-width:960px;margin:2rem auto;padding:0 1rem}
-    h1{margin-top:0}
-    .post-list{list-style:none;padding:0;margin:1rem 0}
-    .post-list li{padding:0.6rem 0;border-bottom:1px solid #e6e9ee;display:flex;flex-direction:column}
-    .post-list a{color:var(--brand);text-decoration:none;font-weight:600}
-    .post-list a:hover{color:var(--accent)}
-    .meta{color:var(--muted);font-size:0.95rem;margin-bottom:0.25rem}
-    footer{max-width:960px;margin:3rem auto;padding:1rem;text-align:center;color:var(--muted);font-size:0.9rem}
-    .badge{background:var(--accent);color:#111;padding:0.15rem 0.5rem;border-radius:999px;font-weight:600;font-size:0.85rem}
-
-    /* Header banner */
-    .brand-banner { display:inline-flex; align-items:center; gap:0.7rem; cursor:default; }
-    .brand-svg { height:38px; width:auto; display:block; }
-
-    /* Back button for individual post pages */
-    .back {
-      display: inline-block;
-      margin-bottom: 1rem;
-      padding: 0.35rem 0.7rem;
-      background: var(--accent);
-      color: #111;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .back:hover { opacity: 0.95; }
-
-    @media (max-width:640px){ .nav-links a{margin-left:0.6rem;font-size:0.95rem} }
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Terel Lewis — Articles</title>
+  <meta name="description" content="Articles by Terel Lewis" />
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="site-header">
-    <div class="inner">
-      <div class="brand">
-        <!-- non-interactive banner -->
-        <div class="brand-banner" role="img" aria-label="{{ site.title | default: 'The Bot Layer' }}">
-          <svg class="brand-svg" viewBox="0 0 120 40" role="presentation" xmlns="http://www.w3.org/2000/svg" focusable="false">
-            <defs>
-              <linearGradient id="g" x1="0" x2="1">
-                <stop offset="0" stop-color="#f2d16d" stop-opacity="0.95"/>
-                <stop offset="1" stop-color="#ffffff" stop-opacity="0.15"/>
-              </linearGradient>
-            </defs>
-            <rect x="0.5" y="2" rx="6" ry="6" width="119" height="36" fill="url(#g)" opacity="0.95"/>
-            <rect x="8" y="8" rx="3" ry="3" width="24" height="20" fill="#111" />
-            <rect x="14" y="14" width="3" height="3" rx="0.8" fill="#f2d16d"/>
-            <rect x="21" y="14" width="3" height="3" rx="0.8" fill="#f2d16d"/>
-            <rect x="16" y="19" width="10" height="2" rx="1" fill="#6e4315"/>
-            <rect x="18.5" y="4" width="1.8" height="4" fill="#111"/>
-            <circle cx="19.4" cy="4" r="1.6" fill="#f2d16d"/>
-            <g transform="translate(40,24)">
-              <text x="0" y="-2" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial" font-size="12" font-weight="800" fill="#ac1a03">{{ site.title | default: "The Bot Layer" }}</text>
-              <text x="0" y="10" font-family="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial" font-size="9" fill="#6e4315">{{ page.subtitle | default: page.description | default: "Concise AI updates" }}</text>
-            </g>
-          </svg>
-        </div>
-      </div>
-
+    <div class="container header-inner">
+      <a class="brand" href="/">Terel Lewis</a>
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="{{ '/' | relative_url }}">Home</a>
-         <!-- <a href="/newsletter/">Newsletter</a> -->
-        <!-- <a href="/about/">About</a> -->
-        <!-- <a href="/contact/">Contact</a> -->
+        <a href="/The-Retail-Evolution.html">The Retail Evolution</a>
+        <a href="/The-Future-is-Agentic.html">The Future is Agentic</a>
+        <a href="/about/">About</a>
       </nav>
     </div>
   </header>
 
   <main class="container" role="main">
-    <h1>Latest AI Updates</h1>
-    <p>Newsletters</p>
+    <h1>Articles</h1>
+    <p class="lede">A selection of essays and notes on AI, agents, and the evolution of retail and systems thinking.</p>
 
-    <ul class="post-list">
-      {% for post in site.posts %}
-        <li>
-          <div class="meta">{{ post.date | date: "%B %d, %Y" }}</div>
-          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        </li>
-      {% endfor %}
+    <ul class="post-list" aria-label="List of articles">
+      <li class="post-item">
+        <a class="post-link" href="/The-Retail-Evolution.html">
+          <h2 class="post-title">The Retail Evolution</h2>
+          <p class="post-meta">January 14, 2026</p>
+          <p class="excerpt">How experience, logistics, and agentic systems are reshaping retail — from supply chains to storefronts.</p>
+        </a>
+      </li>
+
+      <li class="post-item">
+        <a class="post-link" href="/The-Future-is-Agentic.html">
+          <h2 class="post-title">The Future is Agentic</h2>
+          <p class="post-meta">January 15, 2026</p>
+          <p class="excerpt">An essay on agentic architectures, responsible delegation, and what it means for product design and governance.</p>
+        </a>
+      </li>
     </ul>
   </main>
 
-  <footer>
-    © {{ site.time | date: "%Y" }} <a href="https://github.com/TerelLewis/TLewis.github.io" style="color:var(--brand);text-decoration:none">TerelLewis</a> — Built with GitHub Pages
+  <footer class="site-footer">
+    <div class="container">
+      © 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a> — Built with GitHub Pages
+    </div>
   </footer>
 </body>
 </html>
