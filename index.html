@@ -5,12 +5,20 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Terel Lewis — Articles</title>
   <meta name="description" content="Articles by Terel Lewis" />
+
+  <!-- Fonts & stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a class="brand" href="/">Terel Lewis</a>
+      <a class="brand" href="/">
+        <span class="logo" aria-hidden="true"></span>
+        Terel Lewis
+      </a>
       <nav class="nav-links" aria-label="Primary navigation">
         <a href="/The-Retail-Evolution.html">The Retail Evolution</a>
         <a href="/The-Future-is-Agentic.html">The Future is Agentic</a>
@@ -18,6 +26,32 @@
       </nav>
     </div>
   </header>
+
+  <!-- Banner (new) -->
+  <div class="banner" role="region" aria-label="Announcement banner">
+    <div class="container banner-inner">
+      <div class="banner-message">New essays & weekly AI notes — stay in the loop.</div>
+      <div class="banner-actions">
+        <a class="btn btn-primary" href="#subscribe">Subscribe</a>
+        <a class="btn btn-secondary" href="/The-Future-is-Agentic.html">Read latest</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero: lightweight newsletter CTA -->
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <p class="kicker">Weekly AI insights</p>
+      <h2 id="hero-title" class="h-title">Short, sharp AI briefs — for curious builders</h2>
+      <p class="h-desc">Join the newsletter for practical experiments, quick reads, and curated resources about ML/AI every week.</p>
+
+      <form id="subscribe" class="newsletter" action="/subscribe" method="POST" aria-label="Subscribe to newsletter">
+        <input class="input" name="email" type="email" placeholder="you@domain.com"
+               aria-label="Email address" required>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
 
   <main class="container" role="main">
     <h1>Articles</h1>
