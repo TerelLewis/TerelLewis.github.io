@@ -71,7 +71,7 @@ html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-sy
 .hero-banner{
   position:relative;
   width:100%;
-  min-height:500px;
+  min-height:400px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -95,7 +95,7 @@ html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-sy
   will-change:transform;
 }
 .hero-banner-image{
-  max-width:400px;
+  max-width:320px;
   width:80%;
   height:auto;
   object-fit:contain;
@@ -141,13 +141,13 @@ html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-sy
 
 /* Responsive styles */
 @media (max-width:820px){
-  .hero-banner{min-height:400px}
+  .hero-banner{min-height:320px}
   .hero-banner-headline{font-size:2rem}
 }
 @media (max-width:600px){
-  .hero-banner{min-height:350px}
+  .hero-banner{min-height:280px}
   .hero-banner-headline{font-size:1.75rem}
-  .hero-banner-image{max-width:300px}
+  .hero-banner-image{max-width:240px}
 }
 
 /* Simple hero / newsletter area (index) */
