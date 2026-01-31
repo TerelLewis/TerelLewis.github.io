@@ -10,6 +10,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
+  <script>
+    // Parallax scroll effect for hero banner
+    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const parallaxElement = document.querySelector('.hero-banner-image-wrapper');
+        if (parallaxElement) {
+          const offset = scrolled * 0.4;
+          parallaxElement.style.setProperty('--scroll-offset', offset + 'px');
+        }
+      });
+    }
+  </script>
 </head>
 <body>
   <!-- Banner (site-wide navigation) -->
@@ -22,6 +35,16 @@
       </div>
     </div>
   </div>
+
+  <!-- Hero Banner with Image -->
+  <section class="hero-banner" role="banner">
+    <div class="hero-banner-image-wrapper">
+      <img src="/Images/The-Bot-Layer-Logo.png" alt="The Bot Layer Logo" class="hero-banner-image" />
+    </div>
+    <div class="hero-banner-content">
+      <h1 class="hero-banner-headline">Extending the stack: Where AI meets Infrastructure.</h1>
+    </div>
+  </section>
 
   <main class="container" role="main">
     <!-- Hero / Newsletter intro -->
