@@ -13,12 +13,18 @@
   <script>
     // Parallax scroll effect for hero banner
     if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
+      const parallaxElement = document.querySelector('.hero-banner-image-wrapper');
+      let ticking = false;
+      
       window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const parallaxElement = document.querySelector('.hero-banner-image-wrapper');
-        if (parallaxElement) {
-          const offset = scrolled * 0.4;
-          parallaxElement.style.setProperty('--scroll-offset', offset + 'px');
+        if (!ticking && parallaxElement) {
+          window.requestAnimationFrame(function() {
+            const scrolled = window.pageYOffset;
+            const offset = scrolled * 0.4;
+            parallaxElement.style.setProperty('--scroll-offset', offset + 'px');
+            ticking = false;
+          });
+          ticking = true;
         }
       });
     }
@@ -37,7 +43,7 @@
   </div>
 
   <!-- Hero Banner with Image -->
-  <section class="hero-banner" role="banner">
+  <section class="hero-banner" role="region" aria-label="Hero banner">
     <div class="hero-banner-image-wrapper">
       <img src="/Images/The-Bot-Layer-Logo.png" alt="The Bot Layer Logo" class="hero-banner-image" />
     </div>
