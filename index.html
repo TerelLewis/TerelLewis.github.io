@@ -10,25 +10,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css" />
-  <script>
-    // Parallax scroll effect for hero banner
-    if (window.matchMedia('(prefers-reduced-motion: no-preference)').matches) {
-      const parallaxElement = document.querySelector('.hero-banner-image-wrapper');
-      let ticking = false;
-      
-      window.addEventListener('scroll', function() {
-        if (!ticking && parallaxElement) {
-          window.requestAnimationFrame(function() {
-            const scrolled = window.pageYOffset;
-            const offset = scrolled * 0.4;
-            parallaxElement.style.setProperty('--scroll-offset', offset + 'px');
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    }
-  </script>
 </head>
 <body>
   <!-- Banner (site-wide navigation) -->
