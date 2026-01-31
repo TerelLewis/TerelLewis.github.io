@@ -41,6 +41,12 @@ html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-sy
 }
 .banner-message{font-weight:700}
 .banner-actions{display:flex;gap:8px;align-items:center}
+.banner-divider{
+  width:1px;
+  height:24px;
+  background:rgba(255,255,255,0.3);
+  margin:0 4px;
+}
 
 /* Buttons in banner */
 .btn{
@@ -156,6 +162,23 @@ html,body{height:100%;margin:0;padding:0;font-family:Inter, system-ui, -apple-sy
 
 /* Post item */
 .post-item{background:#fff;border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+.post-item:not(:last-child){
+  border-bottom:2px solid var(--bg);
+  padding-bottom:20px;
+  margin-bottom:20px;
+  position:relative;
+}
+.post-item:not(:last-child)::after{
+  content:'';
+  position:absolute;
+  bottom:-11px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 28px);
+  height:2px;
+  background:linear-gradient(90deg, transparent 0%, var(--muted) 50%, transparent 100%);
+  opacity:0.15;
+}
 .post-title{margin:0 0 6px 0;font-weight:700}
 .post-title a{color:var(--text);text-decoration:none}
 .post-meta{margin:0 0 8px 0;color:var(--muted);font-size:0.9rem}
