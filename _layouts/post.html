@@ -12,7 +12,7 @@
        --text   : main text color          -> #111
     */
     :root { --brand:#ac1a03; --accent:#f2d16d; --bg:#f6f8fa; --muted:#6e4315; --text:#111; }
-    html,body{margin:0;padding:0;font-family:Calibri, Arial, Segoe UI, sans-serif;color:#111;background:var(--bg)}
+    html,body{margin:0;padding:0;font-family:Calibri, Arial, "Segoe UI", sans-serif;color:#111;background:var(--bg)}
     .site-header{background:var(--brand);color:white;padding:0.75rem 1rem;position:sticky;top:0;z-index:30;box-shadow:0 2px 6px rgba(2,6,23,0.08)}
     .site-header .inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
     /* Brand/banner styling */
@@ -89,8 +89,8 @@
             <rect x="18.5" y="4" width="1.8" height="4" fill="#111"/>
             <circle cx="19.4" cy="4" r="1.6" fill="#f2d16d"/>
             <g transform="translate(40,24)">
-              <text x="0" y="-2" font-family="Calibri, Arial, Segoe UI, sans-serif" font-size="12" font-weight="800" fill="#ac1a03">{{ site.title | default: "The Bot Layer" }}</text>
-              <text x="0" y="10" font-family="Calibri, Arial, Segoe UI, sans-serif" font-size="9" fill="#6e4315">{{ page.subtitle | default: page.description | default: "Concise AI updates" }}</text>
+              <text x="0" y="-2" font-family="Calibri, Arial, 'Segoe UI', sans-serif" font-size="12" font-weight="800" fill="#ac1a03">{{ site.title | default: "The Bot Layer" }}</text>
+              <text x="0" y="10" font-family="Calibri, Arial, 'Segoe UI', sans-serif" font-size="9" fill="#6e4315">{{ page.subtitle | default: page.description | default: "Concise AI updates" }}</text>
             </g>
           </svg>
         </div>
