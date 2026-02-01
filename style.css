@@ -11,7 +11,9 @@
 /* Basic reset */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;padding:0;font-family:Calibri, Arial, Segoe UI, sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.8}
-h1,h2{line-height:1.8}
+h1{line-height:1.4;font-size:2.3rem;margin-bottom:1rem}
+h2{line-height:1.8;font-size:1.8rem;margin-top:1.5rem;margin-bottom:1rem}
+h3{font-size:1.5rem;margin-top:1.2rem;margin-bottom:0.8rem}
 p{line-height:1.8}
 .container{max-width:var(--max-width);margin:0 auto;padding:20px}
 
@@ -202,8 +204,19 @@ p{line-height:1.8}
   margin-bottom:2rem;
 }
 .post h1{
-  margin:0 0 0.75rem 0;
-  line-height:1.8;
+  font-size:2.3rem;
+  margin:0 0 1rem 0;
+  line-height:1.4;
+}
+.post h2{
+  font-size:1.8rem;
+  margin-top:1.5rem;
+  margin-bottom:1rem;
+}
+.post h3{
+  font-size:1.5rem;
+  margin-top:1.2rem;
+  margin-bottom:0.8rem;
 }
 .post-content{
   font-size:1.1rem;
