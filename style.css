@@ -10,12 +10,17 @@
 
 /* Basic reset */
 *{box-sizing:border-box}
-html,body{height:100%;margin:0;padding:0;font-family:sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.8}
+html,body{height:100%;margin:0;padding:0;font-family:sans-serif;color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.8}
+
+/* Page background (bot-layer-bg.png below hero banner area) */
+body{
+  background:var(--bg) url('Images/bot-layer-bg.png') repeat top center scroll;
+}
 h1{line-height:1.4;font-size:2.3rem;margin-bottom:1rem}
 h2{line-height:1.8;font-size:1.8rem;margin-top:1.5rem;margin-bottom:1rem}
 h3{font-size:1.5rem;margin-top:1.2rem;margin-bottom:0.8rem}
 p{line-height:1.8}
-.container{max-width:var(--max-width);margin:0 auto;padding:20px}
+.container{max-width:var(--max-width);margin:0 auto;padding:20px;background:var(--bg);border-radius:var(--radius)}
 
 /* Banner */
 .banner{
