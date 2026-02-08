@@ -11,6 +11,20 @@
 /* Basic reset */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;padding:0;font-family:sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.8}
+
+/* Transparent background image */
+body::before{
+  content:'';
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:url('Images/bot-layer-bg.png') center/cover no-repeat;
+  opacity:0.08;
+  z-index:-1;
+  pointer-events:none;
+}
 h1{line-height:1.4;font-size:2.3rem;margin-bottom:1rem}
 h2{line-height:1.8;font-size:1.8rem;margin-top:1.5rem;margin-bottom:1rem}
 h3{font-size:1.5rem;margin-top:1.2rem;margin-bottom:0.8rem}
