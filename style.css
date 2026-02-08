@@ -224,6 +224,16 @@ p{line-height:1.8}
   font-size:0.95rem;
 }
 
+/* Circuit board background wrapper */
+.circuit-bg{
+  background-image:url('/Images/bot-layer-bg.png');
+  background-repeat:repeat;
+  background-size:400px 400px;
+  padding:32px 24px;
+  border-radius:12px;
+  margin-top:12px;
+}
+
 /* Section headings */
 .section-heading{font-size:1.8rem;font-weight:700;margin:1.5rem 0;color:var(--text)}
 
