@@ -11,6 +11,7 @@
 /* Basic reset */
 *{box-sizing:border-box}
 html,body{height:100%;margin:0;padding:0;font-family:sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.8}
+/* Circuit board background positioned below hero banner (starts at ~580px to clear banner + hero sections) */
 body{
   background-image:url('/Images/bot-layer-bg.png');
   background-repeat:repeat;
