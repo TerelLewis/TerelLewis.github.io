@@ -1,5 +1,5 @@
 :root{
-  --brand: #ac1a03;   /* main banner/background color */
+  --brand: #ac1a03;   /* main banner/background/color */
   --accent: #f2d16d;  /* primary button / highlight */
   --muted: #6e4315;   /* secondary / text accent */
   --bg: #fffdfa;
@@ -17,18 +17,7 @@ h3{font-size:1.5rem;margin-top:1.2rem;margin-bottom:0.8rem}
 p{line-height:1.8}
 .container{max-width:var(--max-width);margin:0 auto;padding:20px}
 
-/* Header */
-.site-header{padding:18px 0}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text);font-weight:700}
-.logo{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,var(--accent),var(--muted))}
-
-/* Nav */
-.nav-links{display:flex;gap:12px}
-.nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
-.nav-links a[aria-current="page"]{color:var(--text)}
-
-/* Banner (new) */
+/* Banner */
 .banner{
   background:var(--brand);
   color: #fff;
@@ -52,7 +41,7 @@ p{line-height:1.8}
   margin:0 4px;
 }
 
-/* Buttons in banner */
+/* Buttons */
 .btn{
   display:inline-flex;
   align-items:center;
@@ -64,12 +53,6 @@ p{line-height:1.8}
   cursor:pointer;
   border:0;
 }
-.btn-primary{
-  background:var(--accent);
-  color:#221a08; /* dark text on yellow */
-  box-shadow:0 6px 14px rgba(0,0,0,0.08);
-}
-.btn-primary:hover{opacity:0.95;transform:translateY(-2px)}
 .btn-secondary{
   background:transparent;
   color:#fff;
@@ -123,8 +106,6 @@ p{line-height:1.8}
   animation:fadeInUp 1s ease-out 0.3s backwards;
   text-shadow:0 2px 4px rgba(0,0,0,0.05);
 }
-
-
 
 /* Fade-in animation */
 @keyframes fadeInHero{
@@ -245,6 +226,10 @@ p{line-height:1.8}
 
 /* Section headings */
 .section-heading{font-size:1.8rem;font-weight:700;margin:1.5rem 0;color:var(--text)}
+
+/* About page */
+.lede{font-size:1.2rem;line-height:1.6;color:var(--muted);margin-bottom:2rem}
+.about-photo{width:200px;height:200px;border-radius:12px;object-fit:cover}
 
 /* Footer */
 .site-footer{margin-top:32px;padding-top:18px;border-top:1px solid rgba(0,0,0,0.03);color:var(--muted);text-align:center;font-size:0.9rem}
