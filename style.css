@@ -232,6 +232,7 @@ p{line-height:1.8}
 /* About page */
 .lede{font-size:1.2rem;line-height:1.6;color:var(--muted);margin-bottom:2rem}
 .about-photo{width:200px;height:200px;border-radius:12px;object-fit:cover}
+.about-grid{display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start}
 
 /* Footer */
 .site-footer{margin-top:0;padding-top:18px;border-top:1px solid rgba(0,0,0,0.03);color:var(--muted);text-align:center;font-size:0.9rem}
