@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agentic Threat Modeling: Securing the AI Attack Surface — The Bot Layer</title>
+  <meta name="description" content="How autonomous AI agents expand the threat surface and what security teams need to model, monitor, and mitigate." />
+
+  <link rel="canonical" href="https://terellewis.github.io/Cyber-Agentic-Threat-Modeling.html" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="banner" role="region" aria-label="Announcement banner">
+    <div class="container banner-inner">
+      <div class="banner-message">The Bot Layer</div>
+      <div class="banner-actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/cyber.html">Cyber</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" role="main">
+    <a class="back" href="/cyber.html">&larr; Back to Cyber</a>
+
+    <article class="post" role="article" aria-labelledby="post-title-agentic-threat">
+      <header>
+        <h1 id="post-title-agentic-threat">Agentic Threat Modeling: Securing the AI Attack Surface</h1>
+        <p class="post-meta">
+          <time datetime="2026-02-22">February 22, 2026</time> — by <a href="https://terellewis.github.io/">Terel Lewis</a>
+        </p>
+      </header>
+
+      <div class="post-content">
+        <p>Agentic AI systems introduce a fundamentally new class of security risk. Unlike traditional software that executes deterministic code paths, AI agents operate with autonomy — they browse the web, call external APIs, write and execute code, and chain tool calls together to accomplish goals. Each of those capabilities is a potential attack surface.</p>
+
+        <p><strong>The Expanding Attack Surface</strong></p>
+
+        <p>A conventional threat model focuses on network perimeters and application layers. An agentic threat model must also account for <em>prompt injection</em>, where malicious content embedded in a tool response or retrieved document hijacks the agent's instructions. It must account for <em>tool poisoning</em>, where a compromised <code>MCP</code> server or API returns payloads designed to alter agent behavior. And it must account for <em>credential exfiltration</em>, where an agent with access to secrets can be manipulated into leaking them.</p>
+
+        <p>The MITRE ATT&amp;CK framework is beginning to incorporate agentic attack patterns, but practitioners should not wait for a formal taxonomy. Security teams should map their own agent workflows today using a lightweight threat model: identify every tool an agent can invoke, every data source it can read, and every credential it can access — then ask what happens if any one of those inputs is adversarially controlled.</p>
+
+        <p><strong>Identity Is the Control Plane</strong></p>
+
+        <p>Because agents act on behalf of human users or services, identity is the most critical control point. Each agent should be issued its own non-human identity with scoped permissions and ephemeral credentials. Treat agent identities the same way you would treat privileged service accounts: rotate credentials frequently, audit every action, and apply least-privilege by default. Any agent that can read a secret should be assumed capable of exfiltrating it if compromised.</p>
+
+        <p>Common vulnerability identifiers like <span class="cve">CVE-2024-XXXXX</span> are increasingly relevant to the libraries and runtimes that underpin agent frameworks. Keeping a software bill of materials (SBOM) — and the emerging <em>AI bill of materials</em> (AI BOM) — for every model, library, and tool integration is no longer optional for teams operating agents in production.</p>
+
+        <p><strong>Monitoring and Response</strong></p>
+
+        <p>Agents generate rich audit trails — every tool call, every retrieved document, every model inference can be logged. Security teams should treat these logs with the same rigor applied to infrastructure logs: ingest them into a SIEM, alert on anomalous tool-call sequences, and maintain enough context to reconstruct the chain of agent actions that led to any incident.</p>
+
+        <p>The organizations that will be best positioned in the agentic era are those that start building these controls now, before an incident forces the conversation.</p>
+
+        <footer class="post-end">
+          <p>More on agentic security: <a href="/cyber.html">Cyber</a> | <a href="/Identity-is-the-New-Vehicle.html">Identity is the New Vehicle</a></p>
+        </footer>
+      </div>
+    </article>
+
+    <section class="more-articles" aria-labelledby="more-articles-heading-cyber">
+      <h2 id="more-articles-heading-cyber" class="more-articles-heading">More Articles</h2>
+      <ul class="more-articles-list">
+        <li class="more-articles-item">
+          <a href="/Identity-is-the-New-Vehicle.html">
+            <p class="more-articles-item-title">Identity is the New Vehicle (and AI is Driving)</p>
+            <p class="more-articles-item-meta">February 8, 2026</p>
+          </a>
+        </li>
+        <li class="more-articles-item">
+          <a href="/Agentic-AI-Platform.html">
+            <p class="more-articles-item-title">One Platform for the Agentic AI Era</p>
+            <p class="more-articles-item-meta">February 11, 2026</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">© 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a></div>
+  </footer>
+</body>
+</html>
