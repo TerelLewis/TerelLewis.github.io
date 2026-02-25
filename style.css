@@ -432,12 +432,12 @@ code,kbd,samp,.post-content code{
     display: block;
     max-width: 100%;
     transform-origin: top left;
-    transform: scale(0.92);
+    transform: scale(1);
   }
 }
 
 @media (max-width: 600px) {
   .diagram-panel svg {
-    transform: scale(0.82);
+    transform: scale(1);
   }
 }
