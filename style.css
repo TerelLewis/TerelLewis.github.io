@@ -413,4 +413,31 @@ code,kbd,samp,.post-content code{
     padding: 0;
     white-space: pre;
   }
+
+  /* Diagram panel — terminal-style container for Mermaid diagrams */
+  .diagram-panel {
+    background: #010409;
+    border: 1px solid rgba(34,211,238,0.35);
+    border-radius: 8px;
+    padding: 1.5em 1.2em;
+    overflow-x: auto;
+  }
+  .diagram-panel pre {
+    background: transparent;
+    border: none;
+    padding: 0;
+    overflow-x: visible;
+  }
+  .diagram-panel svg {
+    display: block;
+    max-width: 100%;
+    transform-origin: top left;
+    transform: scale(0.92);
+  }
+}
+
+@media (max-width: 600px) {
+  .diagram-panel svg {
+    transform: scale(0.82);
+  }
 }

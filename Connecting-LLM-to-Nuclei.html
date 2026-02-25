@@ -187,8 +187,9 @@ def build_prompt(findings: list[dict]) -> str:
           <h2 id="diagram-heading">Agentic Workflow Diagram (Detection → Remediation)</h2>
           <p>Before diving into the code, it helps to see the full detection-to-remediation loop in one place. The diagram below maps each stage of the agentic workflow — from the initial signal that triggers a scan, through the policy controls that keep it authorized, to the final verification step. I find visual models like this useful when reasoning about where guardrails need to live and what happens when a request gets rejected at each gate. Notice that the Policy Gate has two exits: an approved path that runs Nuclei, and a rejected path that routes to Human Review instead of proceeding automatically.</p>
 
-          <pre class="mermaid">
-flowchart TD
+          <div class="diagram-panel">
+            <pre class="mermaid">
+flowchart LR
     A([Signal / Detection]) --> B{Scope &amp; Authorization Check}
     B -- In scope --> C[LLM Planner]
     B -- Out of scope --> Z([Abort])
@@ -202,7 +203,8 @@ flowchart TD
     I -- Approved --> J[Remediation]
     I -- Needs review --> R
     J --> K([Verification])
-          </pre>
+            </pre>
+          </div>
         </section>
 
         <footer class="post-end">
