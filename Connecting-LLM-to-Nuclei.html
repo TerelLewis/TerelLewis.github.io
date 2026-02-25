@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Connecting an LLM to Nuclei: A Practitioner's Architecture Guide — The Bot Layer</title>
+  <meta name="description" content="A hands-on architectural guide for connecting a large language model to the Nuclei vulnerability scanner, with safe configuration patterns and pseudocode examples." />
+
+  <link rel="canonical" href="https://terellewis.github.io/Connecting-LLM-to-Nuclei.html" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="banner" role="region" aria-label="Announcement banner">
+    <div class="container banner-inner">
+      <div class="banner-message">The Bot Layer</div>
+      <div class="banner-actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/cyber.html">Cyber</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" role="main">
+    <a class="back" href="/cyber.html">&larr; Back to Cyber</a>
+
+    <article class="post" role="article" aria-labelledby="post-title-nuclei">
+      <header>
+        <h1 id="post-title-nuclei">Connecting an LLM to Nuclei: A Practitioner's Architecture Guide</h1>
+        <p class="post-meta">
+          <time datetime="2026-02-23">February 23, 2026</time> — by <a href="https://terellewis.github.io/">Terel Lewis</a>
+        </p>
+      </header>
+
+      <div class="post-content">
+        <p>I've been digging into agentic security tooling lately, and one question keeps coming up in practitioner communities: <em>can you wire an LLM directly to a vulnerability scanner and have it reason about findings?</em> The short answer is yes — but the architecture matters enormously if you want to do it safely. Here's what I've learned building a proof-of-concept that connects an LLM to <a href="https://github.com/projectdiscovery/nuclei" rel="noopener noreferrer">Nuclei</a> by ProjectDiscovery.</p>
+
+        <p>This is a practitioner-level architecture walkthrough. I'll cover the design, key safety guardrails, and pseudocode patterns — but I won't include step-by-step exploitation instructions. The goal is to help defenders understand how these systems fit together, not to publish an attack playbook.</p>
+
+        <p><strong>What is Nuclei and Why Does it Matter?</strong></p>
+
+        <p>Nuclei is an open-source, template-driven vulnerability scanner maintained by ProjectDiscovery. It uses a YAML-based template language to define probes for thousands of known vulnerabilities, misconfigurations, and exposed services. Security teams use it to assess web applications, APIs, and network services at scale. Because it's community-driven and template-based, its coverage grows rapidly as new <span class="cve">CVEs</span> are published and as contributors add detection logic.</p>
+
+        <p>The appeal of pairing Nuclei with an LLM is that Nuclei generates structured findings, and LLMs excel at reasoning over structured data. Instead of a human analyst manually triaging hundreds of scanner findings, an LLM can help prioritize, contextualize, and suggest next steps — all within a defined scope.</p>
+
+        <p><strong>The Architecture at a Glance</strong></p>
+
+        <p>The system I prototyped has four layers:</p>
+
+        <ol>
+          <li><strong>Scope enforcement layer:</strong> A configuration file that defines the authorized target hosts, ports, and template categories. Nothing runs without a valid scope definition.</li>
+          <li><strong>Orchestration layer:</strong> A lightweight Python wrapper that invokes Nuclei as a subprocess, passes the scope config, and captures JSON output.</li>
+          <li><strong>LLM reasoning layer:</strong> The scanner findings are injected into a structured prompt. The LLM reasons about severity, exploitability context, and remediation priority.</li>
+          <li><strong>Output layer:</strong> A report is generated in markdown or JSON, scoped to the authorized findings only. No raw exploitation paths are included.</li>
+        </ol>
+
+        <p><strong>Scope Control Is Non-Negotiable</strong></p>
+
+        <p>Before anything else, you need a scope manifest. This is not optional — running a vulnerability scanner against targets you don't own or haven't been explicitly authorized to test is illegal in most jurisdictions and violates every responsible disclosure norm. The scope manifest should specify:</p>
+
+        <ul>
+          <li>Authorized hostnames and IP ranges (CIDR notation recommended)</li>
+          <li>Authorized template severity levels (e.g., only <code>info</code> and <code>medium</code> in early runs)</li>
+          <li>Authorized template categories (e.g., <code>exposures</code> and <code>misconfigurations</code>, not <code>exploits</code>)</li>
+          <li>Rate limits (requests per second to avoid DoS conditions on the target)</li>
+        </ul>
+
+        <p>Here's a pseudocode representation of a minimal scope config:</p>
+
+        <pre><code># scope.yaml (pseudocode — not production-ready)
+targets:
+  - host: "app.example-authorized-target.internal"
+    ports: [80, 443, 8080]
+templates:
+  severity: ["info", "low", "medium"]
+  tags: ["exposure", "misconfiguration", "default-login"]
+  exclude_tags: ["exploit", "dos", "rce", "sqli"]
+rate_limit:
+  requests_per_second: 5
+  timeout_seconds: 10
+authorization:
+  confirmed_by: "security-team@example.com"
+  scope_document: "engagement-2026-02-23.pdf"
+</code></pre>
+
+        <p>The scope document reference is intentional. Every scan should trace back to a written authorization. Even in internal red-team contexts, written scope prevents misunderstandings.</p>
+
+        <p><strong>Orchestration: Calling Nuclei as a Subprocess</strong></p>
+
+        <p>The orchestration layer reads the scope config, validates it, and then invokes Nuclei. Using subprocess rather than a native library keeps the integration simple and ensures you're using the official Nuclei binary with its own safety checks.</p>
+
+        <pre><code># orchestrator.py (pseudocode)
+import subprocess, json, sys
+
+def run_nuclei(scope_config: dict) -> list[dict]:
+    targets = scope_config["targets"]
+    severity = ",".join(scope_config["templates"]["severity"])
+    tags = ",".join(scope_config["templates"]["tags"])
+    exclude_tags = ",".join(scope_config["templates"]["exclude_tags"])
+    rate = scope_config["rate_limit"]["requests_per_second"]
+
+    results = []
+    for target in targets:
+        host = target["host"]
+        cmd = [
+            "nuclei",
+            "-u", host,
+            "-severity", severity,
+            "-tags", tags,
+            "-etags", exclude_tags,          # exclude tags
+            "-rl", str(rate),                # rate limit
+            "-json",                          # structured output
+            "-no-interactsh",                 # disable OOB interactions
+            "-silent",
+        ]
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+        for line in proc.stdout.strip().splitlines():
+            try:
+                results.append(json.loads(line))
+            except json.JSONDecodeError:
+                pass
+    return results
+</code></pre>
+
+        <p>A few safety notes on the flags used above:</p>
+        <ul>
+          <li><code>-etags exploit,dos,rce,sqli</code> excludes whole categories of active exploitation templates.</li>
+          <li><code>-no-interactsh</code> disables out-of-band interaction testing, which can generate unexpected external traffic.</li>
+          <li><code>-rl 5</code> keeps the request rate low enough that the scanner won't accidentally DoS a lightly provisioned target.</li>
+        </ul>
+
+        <p><strong>Prompting the LLM for Triage</strong></p>
+
+        <p>Once you have structured findings, you can inject them into an LLM prompt. The key design decision here is to give the model a clear, constrained task: <em>prioritize and contextualize, don't generate exploit code</em>.</p>
+
+        <pre><code># prompt_builder.py (pseudocode)
+SYSTEM_PROMPT = """
+You are a defensive security analyst assistant.
+You will be given a list of vulnerability scanner findings in JSON format.
+Your job is to:
+1. Summarize each finding in plain English.
+2. Rate remediation priority as HIGH, MEDIUM, or LOW based on severity and exploitability context.
+3. Suggest a remediation action for each finding.
+4. Flag any findings that appear to be false positives based on the template description.
+
+Do NOT generate exploit code, payloads, or step-by-step attack instructions.
+All findings are from an authorized internal security assessment.
+"""
+
+def build_prompt(findings: list[dict]) -> str:
+    findings_json = json.dumps(findings, indent=2)
+    return f"{SYSTEM_PROMPT}\n\nFindings:\n{findings_json}"
+</code></pre>
+
+        <p>The system prompt constraint is important. LLMs will follow instructions, but they benefit from explicit negative constraints when the downstream use case is security. Saying "do NOT generate exploit code" in the system prompt is not sufficient by itself for a production system — you'll also want output filtering — but it meaningfully steers the model's behavior.</p>
+
+        <p><strong>Rate Limits, Timeouts, and Blast Radius</strong></p>
+
+        <p>One thing I underestimated early on was how quickly a scan can generate load. Even at 5 requests per second, a Nuclei run against a single host can issue hundreds of template-driven probes in a few minutes. For production use, I'd recommend:</p>
+
+        <ul>
+          <li>Start with <code>-severity info</code> only. Expand to <code>low</code> and <code>medium</code> only after validating the target can handle it.</li>
+          <li>Set a hard <code>-timeout</code> on both the subprocess call and Nuclei's per-request timeout.</li>
+          <li>Run scans during maintenance windows or off-peak hours if the target is a production system.</li>
+          <li>Log every scan invocation with timestamp, scope hash, and operator identity. Treat these logs as audit artifacts.</li>
+        </ul>
+
+        <p><strong>What I'd Do Differently</strong></p>
+
+        <p>I'm still learning here. A few things I'd change in a second iteration:</p>
+
+        <ul>
+          <li><strong>Template pinning:</strong> Nuclei's template library updates frequently. Pinning to a specific template release (using <code>-nt</code> to disable automatic updates) gives you reproducibility and prevents a new template from running against a target before you've reviewed it.</li>
+          <li><strong>LLM output validation:</strong> I'd add a layer that parses the LLM's output and rejects any response containing common exploit indicators before it reaches the report consumer.</li>
+          <li><strong>Separate the scan and analysis phases:</strong> Store raw findings in a database, then run LLM analysis as a separate async job. This decouples scan latency from analysis latency and gives you a replayable dataset.</li>
+        </ul>
+
+        <p><strong>Where This Fits in a Defensive Program</strong></p>
+
+        <p>This architecture isn't a silver bullet. It's one component of a broader vulnerability management program. The LLM adds value in the triage and contextualization step — helping an analyst quickly understand what matters in a large set of findings. But it doesn't replace human judgment on what to fix first, and it doesn't replace the authorization and scoping discipline that makes the entire operation legitimate.</p>
+
+        <p>The most important insight from building this: the LLM is the easiest part. The hard parts are scope management, rate control, output safety, and organizational trust. Get those right and the LLM integration is almost trivial.</p>
+
+        <footer class="post-end">
+          <p>More on agentic security: <a href="/cyber.html">Cyber</a> | <a href="/Cyber-Agentic-Threat-Modeling.html">Agentic Threat Modeling</a></p>
+        </footer>
+
+        <section class="post-references" aria-labelledby="references-heading">
+          <h2 id="references-heading">References &amp; Further Reading</h2>
+          <ol>
+            <li>ProjectDiscovery. <em>Nuclei — Fast and customizable vulnerability scanner.</em> GitHub. <a href="https://github.com/projectdiscovery/nuclei" rel="noopener noreferrer">https://github.com/projectdiscovery/nuclei</a></li>
+            <li>ProjectDiscovery. <em>Nuclei Templates.</em> GitHub. <a href="https://github.com/projectdiscovery/nuclei-templates" rel="noopener noreferrer">https://github.com/projectdiscovery/nuclei-templates</a></li>
+            <li>OWASP. <em>Web Security Testing Guide (WSTG).</em> <a href="https://owasp.org/www-project-web-security-testing-guide/" rel="noopener noreferrer">https://owasp.org/www-project-web-security-testing-guide/</a></li>
+            <li>MITRE. <em>ATT&amp;CK for Enterprise — Reconnaissance and Initial Access.</em> <a href="https://attack.mitre.org/" rel="noopener noreferrer">https://attack.mitre.org/</a></li>
+            <li>OpenAI. <em>System prompt design guidance.</em> OpenAI Platform Documentation. <a href="https://platform.openai.com/docs/guides/prompt-engineering" rel="noopener noreferrer">https://platform.openai.com/docs/guides/prompt-engineering</a></li>
+            <li>NIST. <em>SP 800-115: Technical Guide to Information Security Testing and Assessment.</em> <a href="https://csrc.nist.gov/publications/detail/sp/800-115/final" rel="noopener noreferrer">https://csrc.nist.gov/publications/detail/sp/800-115/final</a></li>
+            <li>ProjectDiscovery Blog. <em>Nuclei v3 — The Next Generation Scanner.</em> <a href="https://projectdiscovery.io/blog/nuclei-v3" rel="noopener noreferrer">https://projectdiscovery.io/blog/nuclei-v3</a></li>
+          </ol>
+        </section>
+      </div>
+    </article>
+
+    <section class="more-articles" aria-labelledby="more-articles-heading-nuclei">
+      <h2 id="more-articles-heading-nuclei" class="more-articles-heading">More Articles</h2>
+      <ul class="more-articles-list">
+        <li class="more-articles-item">
+          <a href="/Cyber-Agentic-Threat-Modeling.html">
+            <p class="more-articles-item-title">Agentic Threat Modeling: Securing the AI Attack Surface</p>
+            <p class="more-articles-item-meta">February 22, 2026</p>
+          </a>
+        </li>
+        <li class="more-articles-item">
+          <a href="/Identity-is-the-New-Vehicle.html">
+            <p class="more-articles-item-title">Identity is the New Vehicle (and AI is Driving)</p>
+            <p class="more-articles-item-meta">February 8, 2026</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">© 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a></div>
+  </footer>
+</body>
+</html>

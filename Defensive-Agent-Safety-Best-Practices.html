@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Defensive Agent Safety: Best Practices for Engineers Who Worry Their Agents Could Be Turned Against Them — The Bot Layer</title>
+  <meta name="description" content="Practical safety and ethics guidance for engineers building defensive AI agents, covering adversarial robustness, containment, and responsible deployment." />
+
+  <link rel="canonical" href="https://terellewis.github.io/Defensive-Agent-Safety-Best-Practices.html" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="banner" role="region" aria-label="Announcement banner">
+    <div class="container banner-inner">
+      <div class="banner-message">The Bot Layer</div>
+      <div class="banner-actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/cyber.html">Cyber</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" role="main">
+    <a class="back" href="/cyber.html">&larr; Back to Cyber</a>
+
+    <article class="post" role="article" aria-labelledby="post-title-agent-safety">
+      <header>
+        <h1 id="post-title-agent-safety">Defensive Agent Safety: Best Practices for Engineers Who Worry Their Agents Could Be Turned Against Them</h1>
+        <p class="post-meta">
+          <time datetime="2026-03-04">March 4, 2026</time> — by <a href="https://terellewis.github.io/">Terel Lewis</a>
+        </p>
+      </header>
+
+      <div class="post-content">
+        <p>Here's the fear I keep hearing from engineers building defensive AI agents: <em>what if the thing I built to protect my organization becomes the most effective weapon against it?</em> It's not paranoia. A defensive agent with broad permissions — read access to logs, write access to response playbooks, credential access to quarantine endpoints — is a high-value target. If an attacker can manipulate it, they get all of that for free.</p>
+
+        <p>I'm still learning this space, and I don't have all the answers. But I've been collecting the best thinking I can find on agent safety, and I want to share the patterns that resonate most with me as a practitioner.</p>
+
+        <p><strong>The Core Threat Model: Your Agent as an Attack Surface</strong></p>
+
+        <p>Start by threat-modeling your own agent. Ask the uncomfortable questions:</p>
+
+        <ul>
+          <li>What data can this agent read? If an attacker controls any of that data, they may be able to inject instructions into the agent's context.</li>
+          <li>What actions can this agent take? Every capability is a potential weapon if the agent is manipulated.</li>
+          <li>What credentials does this agent hold? These are the crown jewels. Treat them as if they're already compromised in your threat model.</li>
+          <li>How does this agent handle unexpected or adversarial input? Most agents haven't been hardened against adversarial prompts the way web applications are hardened against SQL injection.</li>
+        </ul>
+
+        <p>Indirect prompt injection is the primary vector here. The OWASP LLM Top 10 rates it as a top risk, and for good reason: an agent processing attacker-controlled content (a phishing email, a malicious log entry, a poisoned document in the vector store) may execute instructions embedded in that content. This isn't a model alignment problem — it's an input validation problem, and it deserves the same engineering rigor as any other injection class.</p>
+
+        <p><strong>Containment Principles</strong></p>
+
+        <p>The single most effective safety measure is minimizing what an agent can do. This sounds obvious, but in practice, agents tend to accumulate permissions over time as new capabilities are added. Fight this tendency aggressively:</p>
+
+        <ul>
+          <li><strong>Least privilege, always:</strong> Give the agent only the permissions it needs for its current task. If the agent is doing triage, it doesn't need write access. If it's writing a report, it doesn't need access to production credentials.</li>
+          <li><strong>Ephemeral credentials:</strong> Don't give agents long-lived API keys. Use short-lived tokens with automatic rotation. If an agent is compromised, the damage window is bounded by the credential lifetime.</li>
+          <li><strong>Read-before-write gates:</strong> For agents that do take action (quarantine, block, remediate), add a human-in-the-loop gate before consequential write actions. The agent proposes; a human approves. This is slower, but the blast radius of a manipulated agent is dramatically reduced.</li>
+          <li><strong>Tool surface minimization:</strong> Every tool you expose to an agent is an attack surface. Audit your tool list regularly and remove tools that aren't being used in production workflows.</li>
+        </ul>
+
+        <p><strong>Input Validation and Output Filtering</strong></p>
+
+        <p>Treat agent inputs and outputs like untrusted data flowing through a web application:</p>
+
+        <ul>
+          <li><strong>Sanitize retrieved content:</strong> If your agent retrieves data from external sources (emails, web pages, documents), strip or escape anything that looks like an instruction or a prompt. This is imperfect — there's no perfect sanitizer for natural language — but it meaningfully raises the difficulty of injection attacks.</li>
+          <li><strong>Structural prompts over free-form prompts:</strong> Where possible, use structured inputs (JSON, YAML, templated fields) rather than free-form text that the agent reasons over holistically. Structure reduces the surface for embedded instructions.</li>
+          <li><strong>Output classifiers:</strong> Before an agent's output is acted upon or displayed, run it through a classifier that flags anomalies: unexpected commands, unusual formatting, references to external URLs that weren't in the original task. A lightweight classifier won't catch everything, but it adds a layer.</li>
+        </ul>
+
+        <p><strong>Observability as a Safety Control</strong></p>
+
+        <p>You can't defend what you can't see. Agentic systems are particularly hard to observe because the reasoning happens inside the model — you see the inputs and outputs, but not the chain of thought (unless you're logging it explicitly). Build observability in from the start:</p>
+
+        <ul>
+          <li>Log every tool call with its inputs and outputs, the agent's stated reasoning (if available), and a timestamp.</li>
+          <li>Set up anomaly alerts for unusual tool-call sequences — e.g., an agent that normally reads logs suddenly attempting to call an external API.</li>
+          <li>Maintain an immutable audit trail. If an agent is ever implicated in an incident, you need to reconstruct exactly what it did.</li>
+          <li>Treat agent logs as security-sensitive artifacts. They may contain credential fragments, sensitive data retrieved during a task, or evidence of manipulation attempts.</li>
+        </ul>
+
+        <p><strong>Ethics and Organizational Responsibility</strong></p>
+
+        <p>This is the part I find hardest to write, because it's not purely technical. Defensive agents operate on behalf of an organization, and that organization is responsible for what those agents do — even if a human didn't directly authorize a specific action. Some principles I think are worth holding:</p>
+
+        <ul>
+          <li><strong>Document the agent's decision authority:</strong> Before deploying, write down exactly what this agent is authorized to do, what it is not authorized to do, and under what conditions its authority can be expanded. Treat this like a policy document, not an engineering note.</li>
+          <li><strong>Plan for failure modes:</strong> What happens if the agent takes a wrong action? Is there a rollback procedure? Is the organization prepared to communicate what happened to affected parties?</li>
+          <li><strong>Avoid deploying agents in adversarial environments without extensive testing:</strong> An agent tested only in controlled lab conditions may behave very differently when it encounters real attacker behavior. Red-team the agent before giving it production access.</li>
+          <li><strong>Revisit permissions as the threat landscape evolves:</strong> A permission that was safe when you first deployed may not be safe six months later when new attack patterns emerge. Agent permissions should be re-reviewed on a regular schedule.</li>
+        </ul>
+
+        <p><strong>What I'm Still Figuring Out</strong></p>
+
+        <p>I don't think anyone has fully solved the problem of adversarially robust agentic AI yet. The academic literature on prompt injection is still relatively young. The tooling for agent observability is immature. The organizational processes for governing autonomous AI actions are being invented in real time.</p>
+
+        <p>What I'm confident about: the engineers who build these controls proactively — before an incident forces the conversation — will be better positioned than those who treat safety as an afterthought. The security community has learned this lesson the hard way with web applications, cloud infrastructure, and API security. The agentic AI layer is the next frontier, and the window to build it right is now.</p>
+
+        <footer class="post-end">
+          <p>More on agentic security: <a href="/cyber.html">Cyber</a> | <a href="/Connecting-LLM-to-Nuclei.html">Connecting an LLM to Nuclei</a></p>
+        </footer>
+
+        <section class="post-references" aria-labelledby="references-heading-safety">
+          <h2 id="references-heading-safety">References &amp; Further Reading</h2>
+          <ol>
+            <li>OWASP. <em>LLM Top 10 for Large Language Model Applications — LLM02: Prompt Injection.</em> <a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" rel="noopener noreferrer">https://owasp.org/www-project-top-10-for-large-language-model-applications/</a></li>
+            <li>Greshake, Kai et al. <em>Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Prompt Injection.</em> arXiv, 2023. <a href="https://arxiv.org/abs/2302.12173" rel="noopener noreferrer">https://arxiv.org/abs/2302.12173</a></li>
+            <li>Anthropic. <em>Claude's Model Specification — Avoiding Harm.</em> <a href="https://www.anthropic.com/model-spec" rel="noopener noreferrer">https://www.anthropic.com/model-spec</a></li>
+            <li>MITRE ATLAS. <em>Adversarial Threat Landscape for AI Systems.</em> <a href="https://atlas.mitre.org/" rel="noopener noreferrer">https://atlas.mitre.org/</a></li>
+            <li>NIST. <em>AI Risk Management Framework (AI RMF 1.0).</em> <a href="https://www.nist.gov/system/files/documents/2023/01/26/AI%20RMF%201.0.pdf" rel="noopener noreferrer">https://www.nist.gov/system/files/documents/2023/01/26/AI%20RMF%201.0.pdf</a></li>
+            <li>Perez, Fábio and Ian Ribeiro. <em>Ignore Previous Prompt: Attack Techniques For Language Models.</em> arXiv, 2022. <a href="https://arxiv.org/abs/2211.09527" rel="noopener noreferrer">https://arxiv.org/abs/2211.09527</a></li>
+            <li>Google DeepMind. <em>Frontier Safety Framework.</em> <a href="https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/" rel="noopener noreferrer">https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/</a></li>
+            <li>OpenAI. <em>Preparedness Framework.</em> <a href="https://openai.com/safety/preparedness" rel="noopener noreferrer">https://openai.com/safety/preparedness</a></li>
+          </ol>
+        </section>
+      </div>
+    </article>
+
+    <section class="more-articles" aria-labelledby="more-articles-heading-safety">
+      <h2 id="more-articles-heading-safety" class="more-articles-heading">More Articles</h2>
+      <ul class="more-articles-list">
+        <li class="more-articles-item">
+          <a href="/Connecting-LLM-to-Nuclei.html">
+            <p class="more-articles-item-title">Connecting an LLM to Nuclei: A Practitioner's Architecture Guide</p>
+            <p class="more-articles-item-meta">February 23, 2026</p>
+          </a>
+        </li>
+        <li class="more-articles-item">
+          <a href="/Cyber-Agentic-Threat-Modeling.html">
+            <p class="more-articles-item-title">Agentic Threat Modeling: Securing the AI Attack Surface</p>
+            <p class="more-articles-item-meta">February 22, 2026</p>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">© 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a></div>
+  </footer>
+</body>
+</html>
