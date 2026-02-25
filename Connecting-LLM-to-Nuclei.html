@@ -183,6 +183,28 @@ def build_prompt(findings: list[dict]) -> str:
 
         <p>The most important insight from building this: the LLM is the easiest part. The hard parts are scope management, rate control, output safety, and organizational trust. Get those right and the LLM integration is almost trivial.</p>
 
+        <section class="post-diagram" aria-labelledby="diagram-heading">
+          <h2 id="diagram-heading">Agentic Workflow Diagram (Detection → Remediation)</h2>
+          <p>Before diving into the code, it helps to see the full detection-to-remediation loop in one place. The diagram below maps each stage of the agentic workflow — from the initial signal that triggers a scan, through the policy controls that keep it authorized, to the final verification step. I find visual models like this useful when reasoning about where guardrails need to live and what happens when a request gets rejected at each gate. Notice that the Policy Gate has two exits: an approved path that runs Nuclei, and a rejected path that routes to Human Review instead of proceeding automatically.</p>
+
+          <pre class="mermaid">
+flowchart TD
+    A([Signal / Detection]) --> B{Scope &amp; Authorization Check}
+    B -- In scope --> C[LLM Planner]
+    B -- Out of scope --> Z([Abort])
+    C --> D{Policy Gate}
+    D -- Approved --> E[Tool Runner — Nuclei]
+    D -- Rejected --> R[Human Review]
+    E --> F[Output — JSONL]
+    F --> G[Parser]
+    G --> H[LLM Reporter]
+    H --> I{Human Approval}
+    I -- Approved --> J[Remediation]
+    I -- Needs review --> R
+    J --> K([Verification])
+          </pre>
+        </section>
+
         <footer class="post-end">
           <p>More on agentic security: <a href="/cyber.html">Cyber</a> | <a href="/Cyber-Agentic-Threat-Modeling.html">Agentic Threat Modeling</a></p>
         </footer>
@@ -224,5 +246,23 @@ def build_prompt(findings: list[dict]) -> str:
   <footer class="site-footer" role="contentinfo">
     <div class="container">© 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a></div>
   </footer>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'dark',
+      themeVariables: {
+        background: '#0d1117',
+        primaryColor: '#161b22',
+        primaryTextColor: '#22d3ee',
+        primaryBorderColor: '#22d3ee',
+        lineColor: '#22d3ee',
+        secondaryColor: '#0d1117',
+        tertiaryColor: '#161b22',
+        edgeLabelBackground: '#0d1117',
+        nodeTextColor: '#e6edf3',
+      }
+    });
+  </script>
 </body>
 </html>
