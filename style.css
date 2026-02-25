@@ -313,3 +313,98 @@ code,kbd,samp,.post-content code{
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+
+/* ── Dark theme ──────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --text: #e6edf3;
+    --brand: #22d3ee;   /* cyan */
+    --muted: #8b949e;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* Banner */
+  .banner {
+    background: #161b22;
+    border-bottom: 1px solid #30363d;
+  }
+
+  /* Hero banner: dark overlay, keep background image */
+  .hero-banner {
+    background:
+      linear-gradient(135deg, rgba(13,17,23,0.93) 0%, rgba(22,27,34,0.90) 100%),
+      url('/Images/The-Bot-Layer-Logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* Cards */
+  .post-item {
+    background: #161b22;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+  .more-articles-item {
+    background: #161b22;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  }
+  .more-articles-item:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.55);
+  }
+
+  /* Borders */
+  .post-end,
+  .more-articles {
+    border-top-color: rgba(255,255,255,0.08);
+  }
+
+  /* Links */
+  a { color: var(--brand); }
+  a:hover { opacity: 0.8; }
+
+  /* Article / card title links keep near-white */
+  .post-title a,
+  .more-articles-item a,
+  .more-articles-item-title { color: var(--text); }
+
+  /* Body copy */
+  .h-desc,
+  .excerpt { color: #adbac7; }
+  .post-content { color: #adbac7; }
+
+  /* Inline code / kbd / samp chip — cyan tint */
+  code, kbd, samp, .post-content code {
+    background: rgba(34,211,238,0.10);
+    color: #22d3ee;
+    border-color: rgba(34,211,238,0.25);
+  }
+
+  /* CVE badge — cyan */
+  .cve {
+    background: rgba(34,211,238,0.12);
+    color: #22d3ee;
+    border-color: rgba(34,211,238,0.35);
+  }
+
+  /* Terminal / pre blocks */
+  pre {
+    background: #010409;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 1em 1.2em;
+    overflow-x: auto;
+  }
+  /* pre code: terminal-green text, reset chip decoration */
+  pre code {
+    background: transparent;
+    color: #3fb950;
+    border: none;
+    padding: 0;
+    white-space: pre;
+  }
+}
