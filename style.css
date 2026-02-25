@@ -314,6 +314,12 @@ code,kbd,samp,.post-content code{
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
 
+/* Mermaid diagram blocks */
+.mermaid {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+}
+
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
