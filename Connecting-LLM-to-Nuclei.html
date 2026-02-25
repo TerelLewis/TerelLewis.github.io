@@ -187,6 +187,11 @@ def build_prompt(findings: list[dict]) -> str:
           <h2 id="diagram-heading">Agentic Workflow Diagram (Detection → Remediation)</h2>
           <p>Before diving into the code, it helps to see the full detection-to-remediation loop in one place. The diagram below maps each stage of the agentic workflow — from the initial signal that triggers a scan, through the policy controls that keep it authorized, to the final verification step. I find visual models like this useful when reasoning about where guardrails need to live and what happens when a request gets rejected at each gate. Notice that the Policy Gate has two exits: an approved path that runs Nuclei, and a rejected path that routes to Human Review instead of proceeding automatically.</p>
 
+          <div class="diagram-controls" role="group" aria-label="Diagram zoom controls">
+            <button type="button" class="diagram-zoom" id="zoom-out" aria-label="Zoom out">−</button>
+            <button type="button" class="diagram-zoom" id="zoom-in" aria-label="Zoom in">+</button>
+            <button type="button" class="diagram-zoom" id="zoom-reset" aria-label="Reset zoom">Reset</button>
+          </div>
           <div class="diagram-panel">
             <pre class="mermaid">
 flowchart LR
@@ -265,6 +270,22 @@ flowchart LR
         nodeTextColor: '#e6edf3',
       }
     });
+  </script>
+  <script>
+    (function () {
+      var panel = document.querySelector('.diagram-panel');
+      var STEP = 0.1, MIN = 0.75, MAX = 2.0, DEFAULT = 1.05;
+      function getZoom() {
+        return parseFloat(getComputedStyle(panel).getPropertyValue('--diagram-zoom')) || DEFAULT;
+      }
+      function setZoom(z) {
+        z = Math.min(MAX, Math.max(MIN, Math.round(z * 100) / 100));
+        panel.style.setProperty('--diagram-zoom', z.toFixed(2));
+      }
+      document.getElementById('zoom-out').addEventListener('click', function () { setZoom(getZoom() - STEP); });
+      document.getElementById('zoom-in').addEventListener('click', function () { setZoom(getZoom() + STEP); });
+      document.getElementById('zoom-reset').addEventListener('click', function () { setZoom(DEFAULT); });
+    })();
   </script>
 </body>
 </html>
