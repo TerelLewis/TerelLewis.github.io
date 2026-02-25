@@ -432,12 +432,14 @@ code,kbd,samp,.post-content code{
     display: block;
     max-width: 100%;
     transform-origin: top left;
-    transform: scale(1.15);
+    transform: scale(1.05);
   }
+  .diagram-panel .mermaid svg text, .diagram-panel .mermaid svg .label { font-size: 16px !important; }
 }
 
 @media (max-width: 600px) {
   .diagram-panel .mermaid svg {
-    transform: scale(0.95);
+    transform: scale(1.0);
   }
+  .diagram-panel .mermaid svg text, .diagram-panel .mermaid svg .label { font-size: 15px !important; }
 }
