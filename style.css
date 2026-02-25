@@ -313,3 +313,18 @@ code,kbd,samp,.post-content code{
 
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
+
+/* Dark mode */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #121212;
+    --text: #e8e8e8;
+    --muted: #a89880;
+  }
+  html,body{background:var(--bg);color:var(--text)}
+  .banner{background:#1a1a1a}
+  .banner-message{color:#f0f0f0}
+  .banner-divider{background:rgba(0,220,255,0.35)}
+  .btn-secondary{color:#e8e8e8;border:1px solid rgba(0,220,255,0.45)}
+  .btn-secondary:hover{background:rgba(0,220,255,0.12);opacity:1}
+}
