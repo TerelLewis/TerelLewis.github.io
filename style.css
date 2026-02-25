@@ -317,7 +317,7 @@ code,kbd,samp,.post-content code{
 /* Mermaid diagram blocks */
 .mermaid {
   margin: 1.5rem 0;
-  overflow-x: auto;
+  overflow-x: visible;
 }
 
 /* ── Dark theme ──────────────────────────────────────────────────────────── */
@@ -428,16 +428,16 @@ code,kbd,samp,.post-content code{
     padding: 0;
     overflow-x: visible;
   }
-  .diagram-panel svg {
+  .diagram-panel .mermaid svg {
     display: block;
     max-width: 100%;
     transform-origin: top left;
-    transform: scale(1.75);
+    transform: scale(1.15);
   }
 }
 
 @media (max-width: 600px) {
-  .diagram-panel svg {
-    transform: scale(1.75);
+  .diagram-panel .mermaid svg {
+    transform: scale(0.95);
   }
 }
