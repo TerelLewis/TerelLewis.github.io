@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Agentic Cyber Library — The Bot Layer</title>
+  <meta name="description" content="A curated intelligence toolkit of agentic AI and agentic cybersecurity resources — frameworks, red-team tools, and safety guardrails." />
+
+  <link rel="canonical" href="https://terellewis.github.io/agentic-cyber-library.html" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <!-- Banner (site-wide navigation) -->
+  <div class="banner" role="region" aria-label="Announcement banner">
+    <div class="container banner-inner">
+      <div class="banner-message">The Bot Layer</div>
+      <div class="banner-actions">
+        <a class="btn btn-secondary" href="/">Home</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/cyber.html">Cyber</a>
+        <span class="banner-divider"></span>
+        <a class="btn btn-secondary" href="/about.html">About</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container" role="main">
+    <a class="back" href="/cyber.html">&larr; Back to Cyber</a>
+
+    <!-- Page header -->
+    <section class="hero">
+      <p class="kicker">Intelligence Toolkit</p>
+      <h1 class="h-title">Agentic Cyber Library <span class="badge-new">New</span></h1>
+      <p class="h-desc">A curated and annotated toolkit for builders and defenders working at the intersection of agentic AI and cybersecurity.</p>
+      <p class="library-meta">Last reviewed: 2026-02-26</p>
+    </section>
+
+    <!-- Disclaimer -->
+    <aside class="library-disclaimer" role="note">
+      <strong>Authorization &amp; Ethics Notice:</strong> All offensive or penetration-testing tools listed here are intended exclusively for authorized engagements on systems you own or have explicit written permission to test. Unauthorized use is illegal and unethical. Always follow your organization's responsible-disclosure policy and applicable laws.
+    </aside>
+
+    <!-- Library grid -->
+    <h2 class="section-heading">10 Curated Entries</h2>
+    <div class="library-grid" role="list">
+
+      <!-- 1 · AutoGen -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/microsoft/autogen" target="_blank" rel="noopener noreferrer">AutoGen</a>
+          </h3>
+          <span class="library-card-org">microsoft</span>
+        </div>
+        <p class="library-card-desc">Microsoft's multi-agent conversation framework. AutoGen lets you orchestrate a graph of specialized agents—planner, coder, critic—that collaborate autonomously to solve complex tasks. It is the de-facto reference for understanding agentic handoff patterns and is actively maintained with strong documentation.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-framework">Agent Framework</span>
+          <span class="tag tag-build">Build</span>
+        </div>
+      </article>
+
+      <!-- 2 · LangGraph -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/langchain-ai/langgraph" target="_blank" rel="noopener noreferrer">LangGraph</a>
+          </h3>
+          <span class="library-card-org">langchain-ai</span>
+        </div>
+        <p class="library-card-desc">A graph-based agent orchestration library built on top of LangChain. LangGraph models agent logic as a stateful directed graph with explicit nodes and edges, making it easy to reason about cyclic workflows, human-in-the-loop checkpoints, and rollback—capabilities that matter when building security-aware agents with controlled decision loops.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-framework">Agent Framework</span>
+          <span class="tag tag-build">Build</span>
+        </div>
+      </article>
+
+      <!-- 3 · CrewAI -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/crewAIInc/crewAI" target="_blank" rel="noopener noreferrer">CrewAI</a>
+          </h3>
+          <span class="library-card-org">crewAIInc</span>
+        </div>
+        <p class="library-card-desc">Role-based multi-agent collaboration platform. CrewAI assigns each agent a job title, backstory, and goal, then coordinates them with a configurable process (sequential or hierarchical). Its intuitive mental model maps naturally onto security team personas—analyst, threat-hunter, incident-responder—making it easy to prototype agentic SOC workflows.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-framework">Agent Framework</span>
+          <span class="tag tag-build">Build</span>
+        </div>
+      </article>
+
+      <!-- 4 · PentestGPT -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/GreyDGL/PentestGPT" target="_blank" rel="noopener noreferrer">PentestGPT</a>
+          </h3>
+          <span class="library-card-org">GreyDGL</span>
+        </div>
+        <p class="library-card-desc">An LLM-powered penetration-testing copilot for <em>authorized</em> engagements. PentestGPT maintains a persistent session context, suggests the next test step, and explains its reasoning—bridging the gap between a junior tester's knowledge and experienced pen-test methodology. Use only on scopes you own or have written authorization for.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-offensive">Authorized Offensive</span>
+          <span class="tag tag-test">Testing</span>
+        </div>
+      </article>
+
+      <!-- 5 · Garak -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/NVIDIA/garak" target="_blank" rel="noopener noreferrer">Garak</a>
+          </h3>
+          <span class="library-card-org">NVIDIA</span>
+        </div>
+        <p class="library-card-desc">NVIDIA's open-source LLM vulnerability scanner. Garak runs hundreds of probes against a target model—checking for prompt injection, data leakage, jailbreaks, toxicity, and more—and produces a structured report. It is the closest thing the field has to a standardized security audit tool for AI models and agents, and is under active development.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-security">Security Testing</span>
+          <span class="tag tag-guard">Guardrails</span>
+        </div>
+      </article>
+
+      <!-- 6 · LLM Guard -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/protectai/llm-guard" target="_blank" rel="noopener noreferrer">LLM Guard</a>
+          </h3>
+          <span class="library-card-org">protectai</span>
+        </div>
+        <p class="library-card-desc">A composable input/output safety layer for LLM applications. LLM Guard ships pre-built scanners for prompt injection, PII detection, toxic content, code execution attempts, and more. Drop it in front of any agentic pipeline to add policy enforcement without changing the core agent logic.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-guard">Guardrails</span>
+          <span class="tag tag-security">Security Testing</span>
+        </div>
+      </article>
+
+      <!-- 7 · Promptfoo -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/promptfoo/promptfoo" target="_blank" rel="noopener noreferrer">Promptfoo</a>
+          </h3>
+          <span class="library-card-org">promptfoo</span>
+        </div>
+        <p class="library-card-desc">A developer-first LLM testing and red-teaming framework. Promptfoo evaluates prompts and agents across multiple providers, runs automated red-team attacks (jailbreaks, SSRF, SQL injection via prompt), and integrates into CI pipelines. Its YAML-based test format makes it practical for embedding security regression tests alongside feature tests.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-security">Security Testing</span>
+          <span class="tag tag-test">Testing</span>
+        </div>
+      </article>
+
+      <!-- 8 · OpenAI Evals -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/openai/evals" target="_blank" rel="noopener noreferrer">OpenAI Evals</a>
+          </h3>
+          <span class="library-card-org">openai</span>
+        </div>
+        <p class="library-card-desc">OpenAI's framework for evaluating LLM and agent behavior against curated datasets. Beyond accuracy benchmarks, Evals is the right foundation for building custom safety and alignment evaluations—measuring how an agent responds to adversarial inputs, policy-violating requests, and edge-case security scenarios.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-test">Testing</span>
+          <span class="tag tag-security">Security Testing</span>
+        </div>
+      </article>
+
+      <!-- 9 · E2B -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/e2b-dev/e2b" target="_blank" rel="noopener noreferrer">E2B</a>
+          </h3>
+          <span class="library-card-org">e2b-dev</span>
+        </div>
+        <p class="library-card-desc">Secure cloud sandboxes for running AI-generated code and agent actions. E2B spins up ephemeral, isolated execution environments on demand, so agents can run shell commands, install packages, and interact with filesystems without exposing the host. It is a critical safety primitive for any agent that executes untrusted or AI-generated code.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-guard">Guardrails</span>
+          <span class="tag tag-framework">Agent Framework</span>
+        </div>
+      </article>
+
+      <!-- 10 · Semantic Kernel -->
+      <article class="library-card" role="listitem">
+        <div class="library-card-header">
+          <h3 class="library-card-title">
+            <a href="https://github.com/microsoft/semantic-kernel" target="_blank" rel="noopener noreferrer">Semantic Kernel</a>
+          </h3>
+          <span class="library-card-org">microsoft</span>
+        </div>
+        <p class="library-card-desc">Microsoft's enterprise-grade SDK for building AI agents and copilots. Semantic Kernel emphasizes structured function-calling, memory management, and planner-driven execution with first-class support for responsible-AI filters—pre- and post-execution hooks that let security teams intercept, log, and block agent actions before they reach production systems.</p>
+        <div class="library-card-tags">
+          <span class="tag tag-framework">Agent Framework</span>
+          <span class="tag tag-guard">Guardrails</span>
+        </div>
+      </article>
+
+    </div><!-- /.library-grid -->
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">© 2026 <a href="https://github.com/TerelLewis/TerelLewis.github.io">Terel Lewis</a></div>
+  </footer>
+</body>
+</html>
