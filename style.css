@@ -62,6 +62,44 @@ p{line-height:1.8}
 }
 .btn-secondary:hover{opacity:0.95;transform:translateY(-1px)}
 
+/* Dropdown nav */
+.nav-dropdown{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+}
+.nav-dropdown-menu{
+  display:none;
+  position:absolute;
+  top:100%;
+  left:0;
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.12);
+  border-radius:8px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.12);
+  min-width:180px;
+  z-index:100;
+  padding:4px 0;
+  margin-top:4px;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu{
+  display:block;
+}
+.nav-dropdown-menu a{
+  display:block;
+  padding:8px 16px;
+  color:var(--text);
+  text-decoration:none;
+  font-size:0.95rem;
+  font-weight:500;
+  white-space:nowrap;
+}
+.nav-dropdown-menu a:hover{
+  background:rgba(172,26,3,0.07);
+  color:var(--brand);
+}
+
 /* Hero Banner with Image */
 .hero-banner{
   position:relative;
@@ -512,6 +550,20 @@ code,kbd,samp,.post-content code{
   .banner {
     background: #161b22;
     border-bottom: 1px solid #30363d;
+  }
+
+  /* Dropdown menu — dark mode */
+  .nav-dropdown-menu {
+    background: #161b22;
+    border-color: #30363d;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  }
+  .nav-dropdown-menu a {
+    color: var(--text);
+  }
+  .nav-dropdown-menu a:hover {
+    background: rgba(34,211,238,0.10);
+    color: #22d3ee;
   }
 
   /* Hero banner: dark overlay, keep background image */
