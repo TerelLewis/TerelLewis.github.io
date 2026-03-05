@@ -496,6 +496,132 @@ code,kbd,samp,.post-content code{
 }
 .btn-feature:hover{ opacity:0.88; transform:translateY(-1px); }
 
+/* ── Live Agent Log terminal widget ─────────────────────────────────────── */
+.al-widget{ margin:1.5rem 0; }
+
+.al-terminal{
+  background:#0d1117;
+  border:1px solid #30363d;
+  border-radius:10px;
+  overflow:hidden;
+  font-family:ui-monospace,"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  font-size:0.82rem;
+  line-height:1.65;
+  box-shadow:0 4px 24px rgba(0,0,0,0.25);
+}
+.al-terminal--full{
+  font-size:0.875rem;
+}
+
+.al-topbar{
+  background:#161b22;
+  border-bottom:1px solid #30363d;
+  padding:8px 14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.al-dot{
+  width:12px; height:12px;
+  border-radius:50%;
+  display:inline-block;
+  flex-shrink:0;
+}
+.al-dot--red   { background:#ff5f57; }
+.al-dot--yellow{ background:#febc2e; }
+.al-dot--green { background:#28c840; }
+.al-topbar-title{
+  flex:1;
+  text-align:center;
+  color:#8b949e;
+  font-size:0.78rem;
+  margin-left:-36px; /* visually centre between dots and badge */
+}
+.al-badge{
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  background:#22d3ee;
+  color:#0d1117;
+  border-radius:999px;
+  padding:0.15em 0.6em;
+}
+
+.al-body{
+  padding:12px 16px;
+  max-height:180px;
+  overflow:hidden;
+  position:relative;
+}
+.al-terminal--full .al-body{
+  max-height:340px;
+}
+
+.al-output{ display:flex; flex-direction:column; gap:0; }
+.al-line{ white-space:pre; word-break:break-all; }
+
+/* Line colour tokens */
+.al-info   { color:#8b949e; }
+.al-boot   { color:#e6edf3; font-weight:600; }
+.al-evt    { color:#79c0ff; }
+.al-alert  { color:#f85149; font-weight:600; }
+.al-red    { color:#ff9a56; }
+.al-blue   { color:#56d364; }
+
+/* Blinking cursor */
+.al-cursor{
+  display:inline-block;
+  width:8px; height:1.1em;
+  background:#22d3ee;
+  vertical-align:text-bottom;
+  margin-left:4px;
+  animation:al-blink 1.1s step-end infinite;
+}
+@keyframes al-blink{
+  0%,100%{ opacity:1; }
+  50%    { opacity:0; }
+}
+
+/* Light mode overrides — keep terminal dark even in light mode */
+/* (terminal is inherently dark; no overrides needed for most vars) */
+/* But the outer page may be light, so we just keep the dark bg regardless */
+
+/* Cyber subsection nav list on cyber.html */
+.cyber-nav-list{
+  list-style:none;
+  padding:0;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap:14px;
+  margin:1rem 0 2rem;
+}
+.cyber-nav-item a{
+  display:block;
+  padding:1rem 1.2rem;
+  background:#fff;
+  border:1px solid rgba(172,26,3,0.14);
+  border-radius:8px;
+  text-decoration:none;
+  color:var(--text);
+  font-weight:600;
+  font-size:1rem;
+  transition:box-shadow 0.18s, transform 0.18s, border-color 0.18s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.04);
+}
+.cyber-nav-item a:hover{
+  box-shadow:0 4px 16px rgba(0,0,0,0.09);
+  transform:translateY(-2px);
+  border-color:var(--brand);
+  color:var(--brand);
+}
+.cyber-nav-item-desc{
+  display:block;
+  font-size:0.82rem;
+  font-weight:400;
+  color:var(--muted);
+  margin-top:0.3rem;
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce){ *{transition:none !important} }
 
@@ -721,6 +847,19 @@ code,kbd,samp,.post-content code{
     background: #22d3ee;
     color: #0d1117;
   }
+
+  /* Cyber subsection nav in dark mode */
+  .cyber-nav-item a{
+    background:#161b22;
+    border-color:rgba(34,211,238,0.18);
+    color:var(--text);
+  }
+  .cyber-nav-item a:hover{
+    border-color:#22d3ee;
+    color:#22d3ee;
+    box-shadow:0 4px 16px rgba(0,0,0,0.45);
+  }
+  .cyber-nav-item-desc{ color:#8b949e; }
 }
 
 @media (max-width: 600px) {
